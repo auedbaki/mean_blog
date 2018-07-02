@@ -3,25 +3,49 @@ var express = require('express');
 var path = require('path');
 var cookieParser = require('cookie-parser');
 var logger = require('morgan');
+const expressHbs = require('express-handlebars');
 const mongoose = require('mongoose');
-
+var validator = require('express-validator');
+const config = require('./config/database');
 var indexRouter = require('./routes/index');
 var usersRouter = require('./routes/users');
-
+var authRouter = require('./routes/auth');
+var blogRouter = require('./routes/blog');
 var app = express();
 mongoose.Promise = global.Promise;
-mongoose.connect('mongodb://localhost:27017/blog');
+mongoose.connect(config.uri,err=>{
+  if(err){
+    console.log('Could not connect to Database ',err);
+  }
+  else
+    console.log('Succesfully Connected to Database: '+config.db);
+});
+
 // view engine setup
+app.engine('.hbs',expressHbs({defaultLayout:'layout',extname:'.hbs'}));
 app.set('views', path.join(__dirname, 'views'));
-app.set('view engine', 'jade');
+app.set('view engine', '.hbs');
+var corsOptions = {
+  origin:'http://example.com',
+  optionsSuccessStatus:200
+}
 
 app.use(logger('dev'));
 app.use(express.json());
 app.use(express.urlencoded({ extended: false }));
 app.use(cookieParser());
+app.use(validator());
+// app.use(express.static(__dirname+'/client/dist/'));
+
+// router.get('*', function(req, res, next) {
+//   res.status(200).sendFile(path.join(__dirname,'/client/dist/client/index.html'));
+// });
 app.use(express.static(path.join(__dirname, 'public')));
+/* GET home page. */
 
 app.use('/', indexRouter);
+app.use('/api/auth', authRouter);
+app.use('/api/blog', blogRouter);
 app.use('/users', usersRouter);
 
 // catch 404 and forward to error handler

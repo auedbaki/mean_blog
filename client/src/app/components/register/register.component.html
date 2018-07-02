@@ -1,0 +1,83 @@
+<div class="row justify-content-center">
+        <div class="row show-hide-message">
+                <div [ngClass]="messageClass">
+                    {{message}}
+
+                </div>
+        </div>
+</div>
+
+<div class="row justify-content-center ">
+
+
+    <!-- Card -->
+  <div class="card   col-md-6 col-lg-4">
+
+    <!-- Card body -->
+    <div class="card-body ">
+
+        <!-- Material form register -->
+        <form [formGroup]="form" (submit)="onRegisterSubmit()">
+            <p class="h4 text-center py-4">Sign up</p>
+
+            <!-- Material input text -->
+            <div class="md-form" [ngClass]="{'text-danger':(form.controls.username.errors && form.controls.username.dirty) || (!usernameValid && form.controls.username.dirty),'text-success':(!form.controls.username.errors && usernameValid)}">
+                <i class="fas fa-user prefix grey-text"></i>
+                <input type="text" id="materialFormCardNameEx" class="form-control" name="username" formControlName="username" (blur)="checkUsername()">
+                <label for="materialFormCardNameEx" class="font-weight-light">Username</label>
+                <ul class="help-block">
+                  <li *ngIf="(form.controls.username.errors?.required && form.controls.username.dirty)" >This field is required.</li>
+                  <li *ngIf="(form.controls.username.errors?.minlength || form.controls.username.errors?.maxlength)">Minimum Character : 3 , Maximum Character : 15</li>
+                  <li *ngIf="usernameMessage">{{usernameMessage}}</li>
+                </ul>
+
+            </div>
+
+            <!-- Material input email -->
+            <div class="md-form" [ngClass]="{'text-danger':(form.controls.email.errors && form.controls.email.dirty) || (!emailValid && form.controls.username.dirty),'text-success':(!form.controls.email.errors && emailValid)}">
+                <i class="fas fa-envelope prefix grey-text"></i>
+                <input type="email" id="materialFormCardEmailEx" class="form-control" name="email" formControlName="email" (blur)="checkEMail()">
+                <label for="materialFormCardEmailEx" class="font-weight-light">Your email</label>
+                <ul class="help-block">
+                  <li *ngIf="(form.controls.email.errors?.required && form.controls.email.dirty)" >This field is required.</li>
+                  <li *ngIf="(form.controls.email.errors?.validateEmail)">This must be valid Email.</li>
+                  <li *ngIf="(form.controls.email.errors?.minlength || form.controls.email.errors?.maxlength)">Minimum Character : 5 , Maximum Character : 30</li>
+                  <li *ngIf="emailMessage">{{emailMessage}}</li>
+                </ul>
+            </div>
+
+            <!-- Material input email -->
+            <div class="md-form" [ngClass]="{'text-danger':(form.controls.cemail.errors && form.controls.cemail.dirty),'text-success':(!form.controls.cemail.errors)}">
+                <i class="fas fa-exclamation-triangle prefix grey-text"></i>
+                <input type="email" id="materialFormCardConfirmEx" class="form-control" name="cemail" formControlName="cemail">
+                <label for="materialFormCardConfirmEx" class="font-weight-light">Confirm your email</label>
+                <ul class="help-block">
+                  <li *ngIf="(form.controls.cemail.errors?.required && form.controls.cemail.dirty)" >This field is required.</li>
+                  <li *ngIf="(form.controls.cemail.errors?.minlength || form.controls.cemail.errors?.maxlength)">Minimum Character : 5 , Maximum Character : 30</li>
+                  <li *ngIf="(form.errors?.matchingEmails && form.controls.cemail.dirty)"> Emails do not Match.</li>
+                </ul>
+            </div>
+
+            <!-- Material input password -->
+            <div class="md-form" [ngClass]="{'text-danger':(form.controls.password.errors && form.controls.password.dirty),'text-success':(!form.controls.password.errors)}">
+                <i class="fas fa-lock prefix grey-text"></i>
+                <input type="password" id="materialFormCardPasswordEx" class="form-control" name="password" formControlName="password">
+                <label for="materialFormCardPasswordEx" class="font-weight-light">Your password</label>
+                <ul class="help-block">
+                  <li *ngIf="(form.controls.password.errors?.required && form.controls.password.dirty)" >This field is required.</li>
+                  <li *ngIf="(form.controls.password.errors?.minlength || form.controls.password.errors?.maxlength)">Minimum Character : 8 , Maximum Character : 35</li>
+                </ul>
+            </div>
+
+            <div class="text-center py-4 mt-3">
+                <button class="btn btn-cyan" [disabled]="!form.valid || processing || !emailValid || !usernameValid" type="submit">Register</button>
+            </div>
+        </form>
+        <!-- Material form register -->
+
+    </div>
+    <!-- Card body -->
+
+  </div>
+  <!-- Card -->
+  </div>

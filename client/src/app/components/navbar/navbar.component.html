@@ -1,0 +1,47 @@
+<div class="text-center">
+        <img class="logo" src="https://images-na.ssl-images-amazon.com/images/I/8158mEhS5pL.png" style="height:120px" alt="" srcset=""> 
+</div> 
+<nav class="mb-1 navbar navbar-expand-lg navbar-dark navbar-color">
+  <a class="navbar-brand" routerLink=""> Auedbaki</a>
+  <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarSupportedContent-4" aria-controls="navbarSupportedContent-4" aria-expanded="false" aria-label="Toggle navigation">
+      <span class="navbar-toggler-icon"></span>
+  </button>
+ 
+  <div class="collapse navbar-collapse" id="navbarSupportedContent-4">
+        <ul class="nav navbar-nav navbar-left">
+                <li class="nav-item" [routerLinkActive]="['active']" [routerLinkActiveOptions]="{exact:true}">
+                  <a class="nav-link waves-effect waves-light" routerLink="/">
+                      <i class="fas fa-home"></i> Home
+                      <span class="sr-only">(current)</span>
+                  </a>
+              </li>
+              <li class="nav-item" [routerLinkActive]="['active']" [routerLinkActiveOptions]="{exact:true}">
+                      <a class="nav-link waves-effect waves-light" routerLink="/blog">
+                          <i class="fas fa-newspaper"></i> Blog</a>
+                  </li>
+              </ul>
+      <ul class="navbar-nav ml-auto">
+          
+          <li class="nav-item" [routerLinkActive]="['active']" [routerLinkActiveOptions]="{exact:true}" *ngIf="authService.loggedIn()">
+              <a class="nav-link waves-effect waves-light" routerLink="/dashboard">
+                  <i class="fas fa-tachometer-alt"></i> Dashboard</a>
+          </li>
+          <li class="nav-item" [routerLinkActive]="['active']" [routerLinkActiveOptions]="{exact:true}" *ngIf="!authService.loggedIn()">
+                <a class="nav-link waves-effect waves-light" routerLink="/login">
+                    <i class="fas fa-sign-in-alt"></i> Login</a>
+            </li>
+            <li class="nav-item" [routerLinkActive]="['active']" [routerLinkActiveOptions]="{exact:true}" *ngIf="!authService.loggedIn()">
+                    <a class="nav-link waves-effect waves-light" routerLink="/register">
+                        <i class="fas fa-user-plus"></i> Register</a>
+                </li>
+          <li class="nav-item dropdown" *ngIf="authService.loggedIn()">
+              <a class="nav-link dropdown-toggle waves-effect waves-light" id="navbarDropdownMenuLink-4" data-toggle="dropdown" aria-haspopup="true" aria-expanded="true">
+                  <i class="fas fa-user"></i> Profile </a>
+              <div class="dropdown-menu dropdown-menu-right dropdown-info" aria-labelledby="navbarDropdownMenuLink-4">
+                  <a class="dropdown-item waves-effect waves-light" routerLink="/profile">My account</a>
+                  <a class="dropdown-item waves-effect waves-light" href="#logout" (click)="onLogoutClick()">Log out</a>
+              </div>
+          </li>
+      </ul>
+  </div>
+</nav>
