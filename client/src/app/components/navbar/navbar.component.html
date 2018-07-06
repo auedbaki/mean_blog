@@ -1,7 +1,10 @@
 <div class="text-center">
         <img class="logo" src="https://images-na.ssl-images-amazon.com/images/I/8158mEhS5pL.png" style="height:120px" alt="" srcset=""> 
 </div> 
-<nav class="mb-1 navbar navbar-expand-lg navbar-dark navbar-color">
+<div class="container">
+
+
+<nav class="mb-1 navbar navbar-expand-lg navbar-dark navbar-color"  uk-sticky>
   <a class="navbar-brand" routerLink=""> Auedbaki</a>
   <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarSupportedContent-4" aria-controls="navbarSupportedContent-4" aria-expanded="false" aria-label="Toggle navigation">
       <span class="navbar-toggler-icon"></span>
@@ -19,6 +22,10 @@
                       <a class="nav-link waves-effect waves-light" routerLink="/blog">
                           <i class="fas fa-newspaper"></i> Blog</a>
                   </li>
+                  <li class="nav-item" >
+                        <a class="nav-link waves-effect waves-light" (click)="form.show()">
+                            <i class="fas fa-envelope"></i> Contact</a>
+                    </li>
               </ul>
       <ul class="navbar-nav ml-auto">
           
@@ -39,9 +46,69 @@
                   <i class="fas fa-user"></i> Profile </a>
               <div class="dropdown-menu dropdown-menu-right dropdown-info" aria-labelledby="navbarDropdownMenuLink-4">
                   <a class="dropdown-item waves-effect waves-light" routerLink="/profile">My account</a>
+                    <a *ngIf="admin" class="dropdown-item waves-effect waves-light" routerLink="/newpost">New Post</a>
                   <a class="dropdown-item waves-effect waves-light" href="#logout" (click)="onLogoutClick()">Log out</a>
               </div>
           </li>
       </ul>
   </div>
 </nav>
+</div>
+
+
+      <!--Modal: Contact form-->
+      <div mdbModal #form="mdb-modal" class="modal fade" id="modalContactForm" tabindex="-1" role="dialog" aria-labelledby="myModalLabel"
+        aria-hidden="true">
+        <div class="modal-dialog cascading-modal" role="document">
+          <!--Content-->
+          <div class="modal-content">
+      
+            <!--Header-->
+            <div class="modal-header light-blue darken-3 white-text">
+              <h4 class="title">
+                <i class="fa fa-pencil"></i> Contact form</h4>
+              <button type="button" class="close waves-effect waves-light" data-dismiss="modal" aria-label="Close" (click)="form.hide()">
+                <span aria-hidden="true">×</span>
+              </button>
+            </div>
+            <!--Body-->
+            <div class="modal-body mb-0">
+              <form [formGroup]="modalForm">
+                <div class="md-form form-sm">
+                  <i class="fa fa-envelope prefix"></i>
+                  <input mdbInputDirective type="text" id="modalFormNameEx" formControlName="modalFormNameEx" class="form-control">
+                  <label for="modalFormNameEx">Your name</label>
+                </div>
+      
+                <div class="md-form form-sm">
+                  <i class="fa fa-lock prefix"></i>
+                  <input mdbInputDirective type="email" id="modalFormEmailEx" formControlName="modalFormEmailEx" class="form-control">
+                  <label for="modalFormEmailEx">Your email</label>
+                </div>
+      
+                <div class="md-form form-sm">
+                  <i class="fa fa-tag prefix"></i>
+                  <input mdbInputDirective type="text" id="modalFormSubjectEx" formControlName="modalFormSubjectEx" class="form-control">
+                  <label for="modalFormSubjectEx">Subject</label>
+                </div>
+      
+                <div class="md-form form-sm">
+                  <i class="fa fa-pencil prefix"></i>
+                  <textarea mdbInputDirective type="text" id="modalFormTextEx" formControlName="modalFormTextEx" class="md-textarea mb-0"></textarea>
+                  <label for="modalFormTextEx">Your message</label>
+                </div>
+      
+                <div class="text-center mt-1-half">
+                  <button class="btn btn-info mb-2 waves-light" (click)="onModelSubmit()" mdbWavesEffect>Send
+                    <i class="fa fa-send ml-1"></i>
+                  </button>
+                </div>
+              </form>
+      
+            </div>
+          </div>
+          <!--/.Content-->
+        </div>
+      </div>
+      <!--Modal: Contact form-->
+      

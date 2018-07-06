@@ -1,0 +1,28 @@
+.flashmessage{
+    overflow: hidden;
+    top: 0;
+    right:0;
+    margin-top:20px;
+    margin-right:20px;
+    z-index: 10000;
+    position: fixed;
+}
+#grayOutDiv
+{
+    background-color: #333;
+    opacity: 0.7;
+    position: fixed;
+    top: 0px;
+    left: 0px;
+    height: 100%;
+    width: 100%;
+    overflow: hidden;
+    z-index: 9999;
+}
+
+.flash-message
+{
+    z-index: 10000;
+    position: relative;
+}
+

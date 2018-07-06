@@ -1,15 +1,92 @@
-<h1 class="page-header" >Blog Feed</h1>
-<!-- 
-<div class="row show-hide-message">
+<div class="container">
+<h3 class="card-header mb-2 font-weight-bold mb-5 pt-4">Recent Articles
+  <button class="btn btn-md mt-0 btn-outline-info float-right" style="border-radius: 30%;" name="reload"  (click)="reloadBlogs()" [disabled]="loadingBlogs">
+    <i class="fas fa-sync-alt fa-lg" [ngClass]="reloadClass"></i>&nbsp;&nbsp; Reload</button>
+</h3>
+
+<div class="row show-hide-message" *ngIf="message">
   <div  [ngClass]="messageClass">
     {{message}}
   </div>
-</div> -->
-<button class="btn btn-warning" name="button" *ngIf="!newPost" (click)="newBlogForm()" >New Post</button>
-<button class="btn btn-default" name="reload" *ngIf="!newPost" (click)="reloadBlogs()" [disabled]="loadingBlogs" > <i class="fas fa-sync-alt " [ngClass]="reloadClass"></i>&nbsp;&nbsp; Reload</button>
-<br />
-<br />
-<div *ngIf="!newPost">
+</div>
+
+<!--Section: Blog v.1-->
+<section class="py-4 text-center text-lg-left">
+
+  <!--Grid row-->
+  <div class="row border-bottom mt-3" *ngFor="let article of articles; let position = index; let even = even; let odd=odd; let last = last">
+
+   
+      <!--Grid column-->
+      <div class="col-lg-5 col-xl-5 pb-3" *ngIf="even">
+          <!--Featured image-->
+          <div class="view overlay rounded z-depth-2 waves-light" [routerLink]="['/blog/article/',article._id]" mdbWavesEffect>
+              <img src="{{article.thumbnail}}"  alt="Sample image for first version of blog listing"
+                  class="img-fluid">
+              <a>
+                  <div class="mask rgba-white-slight"></div>
+              </a>
+          </div>
+      </div>
+      <!--Grid column-->
+      
+      <!--Grid column-->
+      <div class="col-lg-7 col-xl-7" *ngIf="even">
+          <!--Excerpt-->
+          <a [routerLink]="['/blog/category/',article.category]" class="green-text">
+              <h6 class="font-weight-bold pb-1">
+                  <i class="fab fa-buromobelexperte"></i> {{article.category}}</h6>
+          </a>
+          <h3 class="mb-1 font-weight-bold dark-grey-text">
+              <strong>{{article.title | truncate:80}}</strong>
+          </h3>
+          <p >{{article.description | truncate : 260 }}</p>
+          
+          <p >by <a [routerLink]="['/user/',article.createdBy.username]"><strong>{{article.createdBy.username}}</strong></a>
+              , {{article.createdAt | date:'MMMM dd yyyy'}}  &nbsp;&nbsp; <i class="fas fa-eye green-text"></i>&nbsp;&nbsp;{{article.views}}</p>
+              <a class="btn btn-info mt-0 btn-sm  waves-light" [routerLink]="['/blog/article/',article._id]" mdbWavesEffect>Read more</a>
+              
+      </div>
+      <!--Grid column-->
+    
+      
+                    <!--Grid column-->
+                    <div class="col-lg-7 col-xl-7 pb-3 clearfix" *ngIf="odd">
+                      <!--Excerpt-->
+                      <a [routerLink]="['/blog/category/',article.category]" class="pink-text">
+                        <h6><i class="fab fa-buromobelexperte"></i> {{article.category}}</h6>
+                      </a>
+                      
+                      <h3 class="mb-1 font-weight-bold dark-grey-text">
+                          <strong>{{article.title | truncate:80}}</strong>
+                      </h3>
+                      <p >{{article.description | truncate : 260}}</p>
+                      <p>by
+                        <a [routerLink]="['/user/',article.createdBy.username]"><strong>{{article.createdBy.username}}</strong></a>, {{article.createdAt | date:'MMMM dd yyyy'}} &nbsp;&nbsp; <i class="fas fa-eye pink-text"></i>&nbsp;&nbsp;{{article.views}}</p>
+                        
+                      <a class="btn btn-pink btn-sm  waves-light" [routerLink]="['/blog/article/',article._id]" mdbWavesEffect>Read more</a>
+                  </div>
+                  <!--Grid column-->
+
+                  <!--Grid column-->
+                  <div class="col-lg-5 col-xl-5 pb-3" *ngIf="odd" >
+                      <!--Featured image-->
+                      <div class="view overlay rounded z-depth-2 waves-light" [routerLink]="['/blog/article/',article._id]" mdbWavesEffect>
+                          <img src="{{article.thumbnail}}"  alt="Second image in the first version of blog listing"
+                              class="img-fluid">
+                          <a>
+                              <div class="mask rgba-white-slight"></div>
+                          </a>
+                      </div>
+                  </div>
+                  <!--Grid column-->
+                  
+  </div>
+  <!--Grid row-->
+</section>
+<!--Section: Blog v.1-->
+
+<!--div >
   <div class="card border-dark">
     <div class="card-header">
       <h4 class="card-title">Post Title</h4>
@@ -28,7 +105,7 @@
           </div>
             <a href="#"><button class="btn btn-sm btn-info">Edit</button></a>
             <a href="#"><button class="btn btn-sm btn-danger">Delete</button></a>
-              <!-- Likes DropDown -->
+          
               <div class="dropdown">
                 <button class="btn btn-sm btn-success"><i class="fas fa-thumbs-up"></i>&nbsp; Likes : 21</button>
                 <div class="dropdown-content">
@@ -37,7 +114,7 @@
                   <a class="dropdown-item" href="#">Try this way</a>
                 </div>
               </div>
-              <!-- DisLikes DropDown -->
+              
               <div class="dropdown">
                 <button class="btn btn-sm btn-warning"><i class="fas fa-thumbs-down"></i>&nbsp; Dislikes : 12</button>
                 <div class="dropdown-content">
@@ -47,7 +124,7 @@
                 </div>
               </div>
         </div>
-        <!-- Fotter End -->
+       
 
         <ul class="list-group">
           <li class="list-group-item">
@@ -117,10 +194,11 @@
               </form>
              
     
-            </section> -->
-              <!-- Reply Logged Out ENd -->
+            </section> 
+              
           </li>
         </ul>
 
   </div>
 </div>
+</div-->

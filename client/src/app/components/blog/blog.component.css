@@ -43,3 +43,8 @@
     width:100px;
      height:100px;
 }
+.article-box-desc{
+    overflow: hidden;
+white-space: nowrap;
+text-overflow: ellipsis;
+}

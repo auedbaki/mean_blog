@@ -1,8 +1,9 @@
 import { Injectable } from '@angular/core';
 import { Http, Headers, RequestOptions } from '@angular/http';
 import { map} from 'rxjs/operators';
-import { tokenNotExpired } from 'angular2-jwt';
-
+import { tokenNotExpired} from 'angular2-jwt';
+import { JwtHelperService } from '@auth0/angular-jwt';
+const helper = new JwtHelperService();
 @Injectable({
   providedIn: 'root'
 })
@@ -11,6 +12,7 @@ export class AuthService {
   authToken;
   user;
   options;
+  decodedToken
   constructor(private http: Http) { }
 
   createAuthenticationHeaders(){
@@ -18,15 +20,33 @@ export class AuthService {
     this.options = new RequestOptions({
       headers:new Headers({
         'Content-Type':'application/json',
-        'authorization':this.authToken
+        'authorization':'Bearer '+this.authToken
       })
     })
   }
-
+  getAuthenticationToken()
+  {
+    this.createAuthenticationHeaders();
+    return this.options;
+  }
   loadToken(){
     this.authToken = localStorage.getItem('token');
+    this.decodedToken = helper.decodeToken(this.authToken);
+    // this.userrole = this.jwtHelper.decodeToken(this.authToken);
   }
-
+  checkRole(){
+    this.loadToken();
+    return this.decodedToken.role;
+  }
+  getUserId() {
+    this.loadToken();
+    return this.decodedToken.userId;
+  }
+  getUserName()
+  {
+    this.loadToken();
+    return this.decodedToken.username;
+  }
   registerUser(user) {
     return this.http.post('/api/auth/register', user).pipe(map(res => res.json()));
   }
@@ -46,11 +66,9 @@ export class AuthService {
     this.user = null;
     localStorage.clear();
   }
-  storeUserData(token, user){
+  storeUserData(token){
     localStorage.setItem('token',token);
-    localStorage.setItem('user',JSON.stringify(user));
     this.authToken = token;
-    this.user = user
   }
 
   getProfile(){

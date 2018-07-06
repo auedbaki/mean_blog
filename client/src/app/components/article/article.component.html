@@ -1,0 +1,90 @@
+<div class="container">
+<div class="row mt-4">
+  
+    <!--Section: Blog v.4-->
+<section class=" pb-3 col-md-8">
+
+    <!--Grid row-->
+    <div class="row">
+        <div class="col-md-12">
+            <!--Featured image-->
+            <div class="card card-cascade wider reverse">
+                <div class="view view-cascade overlay waves-light" mdbWavesEffect>
+                    <img src="https://mdbootstrap.com/img/Photos/Slides/img%20(142).jpg" alt="Wide sample post image" class="img-fluid">
+                    <a>
+                        <div class="mask rgba-white-slight"></div>
+                    </a>
+                </div>
+
+                
+                <!--Post data-->
+                <div class="card-body card-body-cascade  text-center">
+                    <h2>
+                        <a class="font-weight-bold">{{article.title}}</a>
+                    </h2>
+                    <p>Written by
+                        <a>{{article.createdBy.username}}</a>, {{article.createdAt | date: 'MMMM dd yyyy'}}</p>
+
+                   
+
+                </div>
+                <!--Post data-->
+              
+            </div>
+
+            <!--Excerpt-->
+            <div class="excerpt mt-5" [innerHTML]="article.body">
+                
+            </div>
+        </div>
+    </div>
+    <!--Grid row-->
+
+
+
+    <hr class="mb-5 mt-4">
+<!--Author box-->
+<div class="author-box card" style="padding:20px;">
+    <!--Name-->
+    <h3 class="h3-responsive text-center font-weight-bold">About author</h3>
+    <hr>
+    <div class="row">
+        <!--Avatar-->
+        <div class="col-12 col-sm-2 view zoom" >
+            <img src="http://mdbootstrap.com/img/Photos/Avatars/img%20(3).jpg" class="img-fluid rounded-circle z-depth-2" [routerLink]="['/user/',article.createdBy.username]">
+        </div>
+        <!--Author Data-->
+        <div class=" col-12 col-sm-10">
+            <h4 ><strong [routerLink]="['/user/',article.createdBy.username]">{{article.createdBy.username}}</strong></h4>
+            <div class="personal-sm ">
+                <a href="https://" class="social-author" mdbTooltip="Home"><i class="fa fa-home"> </i></a>
+                <a href="https://facebook.com/" class="social-author indigo-text" mdbTooltip="Facebook"><i class="fa fa-facebook"> </i></a>
+                <a href="https://twitter.com/" class="social-author blue-text" mdbTooltip="Twitter"><i class="fa fa-twitter"> </i></a>
+                <a href="https://plus.google.com/" class="social-author red-text" mdbTooltip="Google+"><i class="fa fa-google-plus"> </i></a>
+                <a href="https://linkedin.com/" class="social-author light-blue-text" mdbTooltip="LinkedIn"><i class="fa fa-linkedin"> </i></a>
+                <a href="https://outlook.com/" class="social-author cyan-text"mdbTooltip="Outlook"><i class="fa fa-envelope-o"> </i></a>
+                <a href="https://outlook.com/" class="social-author black-text"mdbTooltip="Github"><i class="fa fa-github"> </i></a>
+            </div>
+            
+            <p>Nam libero tempore, cum soluta nobis est eligendi optio cumque nihil impedit quo minus.</p>
+            <p class="hidden-md-down">Lorem ipsum dolor sit amet, consectetur adipisicing elit. Sint esse nulla quia quam veniam commodi dicta, iusto inventore. Voluptatum pariatur eveniet ea, officiis vitae praesentium beatae quas libero, esse facere.
+            </p>
+        </div>
+    </div>
+</div>
+<!--/.Author box-->
+</section>
+<!--Section: Blog v.4-->
+  
+
+      <div class="col-md-4 justify-content-center">
+          <!-- Search form -->
+            <form class="form-inline md-form form-sm">
+              <input class="form-control form-control-sm mr-3 col-md-10" type="text" placeholder="Search" aria-label="Search" >
+              <i class="fa fa-search" aria-hidden="true"></i>
+            </form>
+      </div>
+
+  </div>
+
+</div>

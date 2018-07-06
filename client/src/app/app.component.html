@@ -1,5 +1,10 @@
-<div class="container">
-    <app-navbar></app-navbar>
-    <flash-messages></flash-messages>
-  <router-outlet></router-outlet>
+<div >
+    <ngx-loading-bar ></ngx-loading-bar>
+    
+            <app-navbar></app-navbar>
+            <flash-messages class="flashmessage"></flash-messages>
+            <router-outlet></router-outlet>
+    <!-- <perfect-scrollbar style="max-height:600px; max-width: 800px;" [config]="config">
+    </perfect-scrollbar> -->
+    
 </div>

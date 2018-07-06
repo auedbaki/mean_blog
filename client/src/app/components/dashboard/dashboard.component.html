@@ -1,1 +1,17 @@
-<h1 class="card-header">Dashboard </h1>
+<div class="container">
+<h1 class="card-header mb-3">Dashboard </h1>
+<ul class="list-group">
+        <li class="list-group-item " *ngFor="let article of articles; let position = index">
+            <div class="row clearfix">
+                <h6 class="green-text col-md-1">{{position + 1}}</h6>
+                <h6 class="gray-text col-md-6">{{article.title | truncate:65}}</h6>
+                <h6 class="text-blue col-md-2">{{article.createdAt | date:'MMM dd yyyy'}}</h6>
+                <a class="btn btn-sm btn-primary float-right" [routerLink]="['/editpost/',article._id]"><i class="fas fa-edit"></i>&nbsp;&nbsp;Edit</a>
+                <a class="btn btn-sm btn-danger float-right" ><i class="fas fa-trash"></i>&nbsp;&nbsp;Delete</a>
+            </div>
+        </li>
+</ul>
+
+
+</div>
+

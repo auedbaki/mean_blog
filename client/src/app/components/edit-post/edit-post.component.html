@@ -1,0 +1,81 @@
+<div class="container">
+
+  <h3 class="card-header mb-3">Edit Post </h3>
+
+    <form class="row" [formGroup]="form" (submit)="onBlogUpdate()">
+      <div class="col-md-9">
+        <div class="md-form">
+          <div class="editor-floara ">
+            <div class="row justify-content-center">
+              <div class="input-group input-group-sm mb-1 col-md-12" [ngClass]="{'text-success':form.controls.title.valid, 'text-danger':form.controls.title.dirty && form.controls.title.errors}">
+                <div class="input-group-prepend">
+                  <span class="input-group-text" id="inputGroup-sizing-sm">Title</span>
+                </div>
+                <input type="text" class="form-control" name="title" formControlName="title" id="title" aria-label="Small" onchange="titlechange()"
+                  value="{{article.title}}" required aria-describedby="inputGroup-sizing-sm">
+                <ul>
+                  <li *ngIf="form.controls.title.dirty && form.controls.title.errors?.requried">This field is required.</li>
+                  <li *ngIf="(form.controls.title.dirty && form.controls.title.errors?.minlength) || (form.controls.title.dirty && form.controls.title.errors?.maxlength)">MaxLength:100 MinLength:5</li>
+                  <li *ngIf="form.controls.title.dirty && form.controls.title.errors?.alphaNumericValidation">Must be letters and Numbers</li>
+                </ul>
+              </div>
+              <div class="input-group input-group-sm mb-1 col-md-12" [ngClass]="{'text-success':form.controls.description.valid, 'text-danger':form.controls.description.dirty && form.controls.description.errors}">
+                <div class="input-group-prepend">
+                  <span class="input-group-text" id="inputGroup-sizing-sm">Description</span>
+                </div>
+                <input type="text" class="form-control" id="description" name="description" formControlName="description" aria-label="Small"
+                  value="{{article.description}}" required aria-describedby="inputGroup-sizing-sm">
+                <ul>
+                  <li *ngIf="form.controls.description.dirty && form.controls.description.errors?.requried">This field is required.</li>
+                </ul>
+              </div>
+            </div>
+            <textarea class="form-control" id="body" name="body" formControlName="body" [froalaEditor]="options" [(froalaModel)]="article.body"></textarea>
+          </div>
+        </div>
+      </div>
+      <div class="col-md-3">
+        <div class=" form">
+          <div class="input-group mb-3">
+            <div class="input-group-prepend">
+              <label class="input-group-text" for="category">Category</label>
+            </div>
+            <select class="custom-select dropdown-menu" id="category" name="category" formControlName="category" [ngModel]="categories">
+              <option class="dropdown-item" *ngFor="let cat of categories" [ngValue]="cat._id">{{cat.category}}</option>
+            </select>
+          </div>
+
+          <div class="input-group mb-3">
+            <div class="input-group-prepend">
+              <label class="input-group-text" for="status">
+                <i class="fas fa-eye"></i> &nbsp;Status</label>
+            </div>
+            <select class="custom-select" id="status" name="status" formControlName="status">
+              <option selected disabled>Choose...</option>
+              <option value="PUBLIC">Public</option>
+              <option value="PRIVATE">Private</option>
+            </select>
+          </div>
+        </div>
+
+        <div class="  form">
+          <div class="input-group">
+            <div class="input-group-prepend">
+              <span class="input-group-text">
+                <i class="fas fa-tags"></i> &nbsp;Tags</span>
+            </div>
+            <input class="form-control" required aria-label="With textarea" id="tags" placeholder="seperated by comma" name="tags" formControlName="tags">
+          </div>
+        </div>
+        <br/>
+        <button type="submit" id="submit" class="btn btn-lg btn-block btn-outline-success waves-effect" [disabled]="loading">
+          <i *ngIf="loading" class="fas fa-sync fa-spin"></i>&nbsp;&nbsp;{{submitbtntxt}}</button>
+
+        <div class="alert  mt-3 invisible" id="message" role="alert">
+          This is a primary alert—check it out!
+        </div>
+      </div>
+  </form>
+
+
+</div>

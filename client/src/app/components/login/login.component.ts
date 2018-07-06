@@ -14,13 +14,15 @@ export class LoginComponent implements OnInit {
   messageClass;
   message;
   processing = false;
-  form: FormGroup;
+  form;
   previousUrl;
+  icontype;
   constructor( private formBuilder: FormBuilder, private authService:AuthService,  private router:Router, private authGuard : AuthGuard) { this.createForm(); }
 
   ngOnInit() {
     if(this.authGuard.redirectUrl)
     {
+      this.icontype = 'user';
       this.messageClass = 'alert alert-danger';
       this.message = 'You must be loggedin to view the requested page.';
       this.previousUrl = this.authGuard.redirectUrl;
@@ -57,14 +59,17 @@ export class LoginComponent implements OnInit {
 
     this.authService.login(user).subscribe(data=>{
       if(!data.success){
+        this.icontype = 'times';
         this.messageClass = 'alert alert-danger';
         this.message = data.message;
         this.processing = false;
         this.enableForm();
       }else{
+        this.icontype = 'check';
         this.messageClass = 'alert alert-success';
-        this.message = data.message;
-        this.authService.storeUserData(data.token,data.user);
+        this.message = 'Login '+data.message;
+        this.authService.storeUserData(data.token);
+        
         setTimeout(()=>{
           if(this.previousUrl)
           {
