@@ -40,6 +40,7 @@ exports.auth_login = (req, res, next)=>{
 }
 
 exports.auth_register = (req, res, next)=>{
+    
     if(!req.body.email)
     res.status(200).json({success:false, message:'You must provide an email'});
     else if(!req.body.username)
@@ -48,56 +49,22 @@ exports.auth_register = (req, res, next)=>{
     res.status(200).json({success:false, message:'You must provide password'});
     else
     {
-        let user = new User({
-         email : req.body.email.toLowerCase(),
-         username : req.body.username.toLowerCase(),
-         password : req.body.password
-        });
+        const user = new User({
+            username:req.body.username,
+            email:req.body.email,
+            password:req.body.password,
+            role:'admin'
+        })
         user.save().then((result=>{
-            
-         //    const mailOptions = {
-         //     from: 'admin@auedbaki.000webhostapp.com', // sender address
-         //     to: result.email, // list of receivers
-         //     subject: 'Welcome '+result.username+'EMail from Spoarkpost  App', // Subject line
-         //     html: '<p>We are happy to see you here welcome to this fucking world.</p>'// plain text body
-         //   };
-         //   transporter.sendMail(mailOptions, function (err, info) {
-         //     if(err){
-         //         console.log(err)
-         //         res.status(200).json({status:false,message:err});
-         //     }
-               
-         //     else{
-                 // console.log(info);
-                 res.status(200).json({success:true,message:'Your Account Created Succesfully'});
-         //     }
-               
-         //  });
+           
+                 res.json({success:true,message:'Your Account Created Succesfully'});
+        
         })).catch(err=>{
-            if(err.code===11000)
-            res.status(200).json({
-                success: false,
-                message: 'Email / Username Already Exist'
-            });
-            else{
-            if(err.errors){
-             if(err.errors.email)
-             res.status(200).json({
-                 success: false,
-                 message: err.errors.email.message
-             });
-             else if(err.errors.username)
-             res.status(200).json({
-                 success: false,
-                 message: err.errors.username.message
-             });
-             } else
-            res.status(200).json({
+            res.json({
                 success: false,
                 message: err.message
             });
-            
-         }
+        
         })
     }
 }
