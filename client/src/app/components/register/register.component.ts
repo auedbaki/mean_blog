@@ -44,7 +44,7 @@ export class RegisterComponent implements OnInit {
     };
     this.authService.registerUser(user).subscribe(data => {
       console.log(data);
-      if (!data.status) {
+      if (!data.success) {
         this.messageClass = 'alert alert-danger';
         this.message = data.message;
         this.enableForm();

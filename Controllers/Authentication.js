@@ -69,21 +69,33 @@ exports.auth_register = (req, res, next)=>{
                
          //     else{
                  // console.log(info);
-                 res.status(200).json({status:true,message:'Your Account Created Succesfully'});
+                 res.status(200).json({success:true,message:'Your Account Created Succesfully'});
          //     }
                
          //  });
         })).catch(err=>{
             if(err.code===11000)
-            res.status(200).json({status:false,message:'Email / Username Already Exist'});
+            res.status(200).json({
+                success: false,
+                message: 'Email / Username Already Exist'
+            });
             else{
             if(err.errors){
              if(err.errors.email)
-             res.status(200).json({status:false,message:err.errors.email.message});
+             res.status(200).json({
+                 success: false,
+                 message: err.errors.email.message
+             });
              else if(err.errors.username)
-             res.status(200).json({status:false,message:err.errors.username.message});
+             res.status(200).json({
+                 success: false,
+                 message: err.errors.username.message
+             });
              } else
-            res.status(200).json({status:false,message:err.message});
+            res.status(200).json({
+                success: false,
+                message: err.message
+            });
             
          }
         })
