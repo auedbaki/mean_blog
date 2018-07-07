@@ -1,7 +1,6 @@
 import { Injectable } from '@angular/core';
 import { Http, Headers, RequestOptions } from '@angular/http';
 import { map} from 'rxjs/operators';
-import { tokenNotExpired} from 'angular2-jwt';
 import { JwtHelperService } from '@auth0/angular-jwt';
 const helper = new JwtHelperService();
 @Injectable({
@@ -76,6 +75,14 @@ export class AuthService {
     return this.http.get('/api/auth/profile',this.options).pipe(map(res=>res.json()));
   }
   loggedIn() {
-   return tokenNotExpired();
+    this.loadToken();
+   if(helper.isTokenExpired(this.authToken))
+   {
+     return false;
+   }
+   else
+   {
+     return true;
+   }
   }
 }

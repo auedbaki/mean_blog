@@ -4,7 +4,7 @@
 <div class="container">
 
 
-<nav class="mb-1 navbar navbar-expand-lg navbar-dark navbar-color"  uk-sticky>
+<nav class="mb-1 navbar navbar-expand-lg navbar-dark navbar-color" style="z-index:1"  uk-sticky>
   <a class="navbar-brand" routerLink=""> Auedbaki</a>
   <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarSupportedContent-4" aria-controls="navbarSupportedContent-4" aria-expanded="false" aria-label="Toggle navigation">
       <span class="navbar-toggler-icon"></span>
@@ -41,7 +41,7 @@
                     <a class="nav-link waves-effect waves-light" routerLink="/register">
                         <i class="fas fa-user-plus"></i> Register</a>
                 </li>
-          <li class="nav-item dropdown" *ngIf="authService.loggedIn()">
+          <li class="nav-item dropdown" *ngIf="authService.loggedIn()" style="z-index:1">
               <a class="nav-link dropdown-toggle waves-effect waves-light" id="navbarDropdownMenuLink-4" data-toggle="dropdown" aria-haspopup="true" aria-expanded="true">
                   <i class="fas fa-user"></i> Profile </a>
               <div class="dropdown-menu dropdown-menu-right dropdown-info" aria-labelledby="navbarDropdownMenuLink-4">

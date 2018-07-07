@@ -24,10 +24,14 @@ import { EditPostComponent } from './components/edit-post/edit-post.component';
 import { ArticleComponent } from './components/article/article.component';
 import { LoadingBarHttpModule } from '@ngx-loading-bar/http';
 import { PerfectScrollbarModule, PERFECT_SCROLLBAR_CONFIG, PerfectScrollbarConfigInterface  } from 'ngx-perfect-scrollbar';
+import {JwtModule } from '@auth0/angular-jwt';
 
 const DEFAULT_PERFECT_SCROLLBAR_CONFIG: PerfectScrollbarConfigInterface = {
   suppressScrollX: true
 };
+export function tokenGetter() {
+  return localStorage.getItem("token");
+}
 
 @NgModule({
   declarations: [
@@ -45,7 +49,7 @@ const DEFAULT_PERFECT_SCROLLBAR_CONFIG: PerfectScrollbarConfigInterface = {
     FooterComponent
   ],
   imports: [
-    BrowserModule,  
+    BrowserModule,
     FormsModule,
     ReactiveFormsModule,
     HttpModule,
@@ -56,16 +60,26 @@ const DEFAULT_PERFECT_SCROLLBAR_CONFIG: PerfectScrollbarConfigInterface = {
     MDBBootstrapModule.forRoot(),
     TruncateModule,
     LoadingBarHttpModule,
-    PerfectScrollbarModule
+    PerfectScrollbarModule,
+    JwtModule.forRoot({
+      config: {
+        tokenGetter: tokenGetter,
+        whitelistedDomains: ["localhost:8080"],
+        blacklistedRoutes: ["localhost:3030/api/"]
+      }
+    })
   ],
   schemas: [NO_ERRORS_SCHEMA],
-  providers: [AuthService, AuthGuard, NotAuthGuard,
+  providers: [
+    AuthService,
+    AuthGuard,
+    NotAuthGuard,
     {
-    provide: PERFECT_SCROLLBAR_CONFIG,
-    useValue: DEFAULT_PERFECT_SCROLLBAR_CONFIG
-    }],
+      provide: PERFECT_SCROLLBAR_CONFIG,
+      useValue: DEFAULT_PERFECT_SCROLLBAR_CONFIG
+    }
+  ],
   bootstrap: [AppComponent]
 })
-export class AppModule {
- 
-}
+export class AppModule {}
+
