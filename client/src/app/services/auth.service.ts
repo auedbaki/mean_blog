@@ -28,6 +28,16 @@ export class AuthService {
     this.createAuthenticationHeaders();
     return this.options;
   }
+  getFormAuthenticationToken()
+  {
+    this.loadToken();
+    return new RequestOptions({
+      headers:new Headers({
+        'enctype':'multipart/form-data',
+        'authorization':'Bearer '+this.authToken
+      })
+    })
+  }
   loadToken(){
     this.authToken = localStorage.getItem('token');
     this.decodedToken = helper.decodeToken(this.authToken);

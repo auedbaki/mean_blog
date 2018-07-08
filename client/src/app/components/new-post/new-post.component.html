@@ -17,7 +17,7 @@
               <div class="input-group-prepend">
                 <span class="input-group-text" id="inputGroup-sizing-sm">Title</span>
               </div>
-                <input   type="text" class="form-control" name="title"   formControlName="title" id="title" aria-label="Small" onchange="titlechange()" required aria-describedby="inputGroup-sizing-sm" >
+                <input   type="text" class="form-control" name="title"   formControlName="title" id="title" aria-label="Small"  required aria-describedby="inputGroup-sizing-sm" >
               <ul>
                 <li *ngIf="form.controls.title.dirty && form.controls.title.errors?.requried">This field is required.</li>
                 <li *ngIf="(form.controls.title.dirty && form.controls.title.errors?.minlength) || (form.controls.title.dirty && form.controls.title.errors?.maxlength)">MaxLength:100 MinLength:5</li>

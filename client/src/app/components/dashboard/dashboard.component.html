@@ -7,7 +7,7 @@
                 <h6 class="gray-text col-md-6">{{article.title | truncate:65}}</h6>
                 <h6 class="text-blue col-md-2">{{article.createdAt | date:'MMM dd yyyy'}}</h6>
                 <a class="btn btn-sm btn-primary float-right" [routerLink]="['/editpost/',article._id]"><i class="fas fa-edit"></i>&nbsp;&nbsp;Edit</a>
-                <a class="btn btn-sm btn-danger float-right" ><i class="fas fa-trash"></i>&nbsp;&nbsp;Delete</a>
+                <a class="btn btn-sm btn-danger float-right" (click)="Ondelete(article._id, article.title)"><i class="fas fa-trash"></i>&nbsp;&nbsp;Delete</a>
             </div>
         </li>
 </ul>

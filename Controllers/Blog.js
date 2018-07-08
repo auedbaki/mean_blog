@@ -1,22 +1,33 @@
 const Blog = require('../models/blog');
 const User = require('../models/user');
+const mongoose = require('mongoose');
+const awsconfig = require('../config/awss3cofig');
+const aws = require('aws-sdk');
+const multer = require('multer');
+const multerS3 = require('multer-s3');
+
+aws.config.update(awsconfig);
+
+const s3 = new aws.S3();
 
 exports.post_new_blog = (req,res,next)=>{
-    
     if(!req.body.title)
     {
+        //deletefile(req.file.key);
         res.json({success:false,message:"Blog Title is Required"});
     }
     else{
         if(!req.body.body)
         {
+           // deletefile(req.file.key);
             res.json({success:false,message:"Blog Body is required"});
         }
         else
         {
            if(!req.body.createdBy)
            {
-                res.json({success:false,message:"Author Name is Required"});
+                //deletefile(req.file.key);
+                res.json({success:false,message:"Author Id Name is Required"});
            }
            else{
             
@@ -25,7 +36,7 @@ exports.post_new_blog = (req,res,next)=>{
                 body:req.body.body,
                 createdBy:req.body.createdBy,
                 url:req.body.url,
-                thumbnail:req.body.thumbnail,
+                thumbnail:req.file.location,
                 tags:req.body.tags.split(','),
                 description:req.body.description,
                 status:req.body.status,
@@ -34,6 +45,7 @@ exports.post_new_blog = (req,res,next)=>{
                 res.json({success:true,message:"Blog Saved"});
             })
             .catch(err=>{
+                //deletefile(req.file.key);
                 if(err.errors)
                 {
                     if(err.errors.title)
@@ -91,7 +103,7 @@ exports.get_article_by_id = (req,res,next)=>{
     }
     else
     {
-        Blog.findOne({_id:req.params.id}).populate('createdBy','username role')
+        Blog.findOneAndUpdate({_id:req.params.id},{$inc:{'views':1}}).populate('createdBy','username role')
         .exec()
         .then(article=>{
             if(!article)
@@ -161,7 +173,7 @@ exports.edit_article = (req,res,next)=>{
                         }
                         else
                         {
-                            if(req.decoded.userid!==article.createdBy)
+                            if(req.decoded.userid!=article.createdBy)
                             {
                                 res.json({success:false,message:'You are not Authorized to edit this article'});
                             }
@@ -207,8 +219,9 @@ exports.delete_article = (req,res,next)=>{
             }
             else
             {
-                if(article.createdBy !== req.decoded.userId)
+                if(article.createdBy != req.decoded.userId)
                 {
+                   
                     res.json({success:false,message:'You are not allowed to delete this article.'});
                 }
                 else
@@ -247,7 +260,7 @@ exports.like_article = (req,res,next)=>{
             }
             else
             {
-                if(article.createdBy===req.decoded.userId)
+                if(article.createdBy==req.decoded.userId)
                 {
                     res.json({success:false,message:'Cannot like your own post.'});
                 }
@@ -303,7 +316,7 @@ exports.dislike_article = (req,res,next)=>{
             }
             else
             {
-                if(article.createdBy===req.decoded.userId)
+                if(article.createdBy==req.decoded.userId)
                 {
                     res.json({success:false,message:'Cannot like your own post.'});
                 }
@@ -342,4 +355,40 @@ exports.dislike_article = (req,res,next)=>{
             res.json({success:false,message:'Invalid Article Id'});
         })
     }
+}
+
+exports.popular_articles = (req,res,next)=>{
+    Blog.find({}).select('title decription thumbnail').sort({views:-1})
+    .limit(5)
+    .exec().then(articles=>{
+        if(!articles)
+        {
+            res.json({success:false,message:'No Article Found'});
+        }
+        else
+        {
+            res.json({success:true,message:`${articles.length} Articles Found`, articles:articles});
+        }
+    })
+    .catch(err=>{
+        console.log({success:false,message:err})
+    })
+}
+
+deletefile = (key)=>{
+    const deleteparams = {
+        Bucket:'bucketauedbaki/thumbnails',
+        Key:key        
+    }
+    s3.deleteObject(deleteparams, function(err,data){
+        if(err)
+        {
+            console.log('File is not Deleted');
+        }
+        else
+        {
+            console.log('File is Deleted');
+        }
+        
+    })
 }

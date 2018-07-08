@@ -8,6 +8,7 @@ import { FlashMessagesService } from 'angular2-flash-messages';
   templateUrl: './dashboard.component.html',
   styleUrls: ['./dashboard.component.css']
 })
+//declare var UIkit: any;
 export class DashboardComponent implements OnInit {
 
   articles;
@@ -17,7 +18,29 @@ export class DashboardComponent implements OnInit {
 
   ngOnInit() {
   }
-
+  Ondelete(id, title)
+  {
+    if(confirm("Do you want to delete \'"+title+"\'?")) {
+      this.blogService.deletearticle(id).subscribe(data=>{
+        if(data.success)
+        {
+          this.flashMessageService.show(
+            data.message,
+            { cssClass: "alert-success animated slideInRight" }
+          );
+          this.getArticleList();
+        }
+        else
+        {
+          this.flashMessageService.show(
+            data.message,
+            { cssClass: "alert-danger animated slideInRight" }
+          );
+        }
+      })
+    }
+    console.log('Log anythong',id);
+  }
   getArticleList()
   {
     this.blogService.getArticleByAuthor(this.authService.getUserName()).subscribe(data=>{

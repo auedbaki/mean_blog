@@ -2,7 +2,7 @@
 <div class="row mt-4">
   
     <!--Section: Blog v.4-->
-<section class=" pb-3 col-md-8">
+<section class=" pb-3 col-md-8" *ngIf="article">
 
     <!--Grid row-->
     <div class="row">
@@ -10,7 +10,7 @@
             <!--Featured image-->
             <div class="card card-cascade wider reverse">
                 <div class="view view-cascade overlay waves-light" mdbWavesEffect>
-                    <img src="https://mdbootstrap.com/img/Photos/Slides/img%20(142).jpg" alt="Wide sample post image" class="img-fluid">
+                    <img src="{{article.thumbnail}}" alt="Wide sample post image" class="img-fluid">
                     <a>
                         <div class="mask rgba-white-slight"></div>
                     </a>

@@ -62,7 +62,7 @@ const blogSchema = new Schema({
     status:{type:String, default:'PRIVATE'},
     category:{type:mongoose.Schema.Types.ObjectId},
     tags:{type:Array},
-    url:{type:String,required:true,duplicate:false},
+    url:{type:String,required:true,unique:true},
     createdBy:{type:mongoose.Schema.Types.ObjectId ,ref:'User', default:'Yashdeep Raj'},
     createdAt:{type:Date,default:Date.now()},
     views:{type:Number,default:0},

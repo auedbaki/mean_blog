@@ -22,15 +22,20 @@ export class BlogService {
   {
     return this.authService.getAuthenticationToken();
   }
+
+  createFormAuthenticationToken()
+  {
+    return this.authService.getFormAuthenticationToken();
+  }
   
   getCategories() {
     return this.http
       .get("https://auedbaki.xyz/api/app/categories", this.options)
       .pipe(map(res => res.json()));
   }
-  submitArticle(blog){
+  submitArticle( data){
     return this.http
-      .post('/api/blog/newBlog',blog, this.createAuthenticationToken())
+      .post('/api/blog/newBlog',data, this.createFormAuthenticationToken())
       .pipe(map(res=>res.json()));
   }
 
@@ -66,14 +71,20 @@ export class BlogService {
   likearticle(id)
   {
     return this.http
-      .put('/api/blog/like/'+id,this.createAuthenticationToken)
+      .put('/api/blog/like/'+id,this.createAuthenticationToken())
       .pipe(map(res=>res.json()));
   }
 
   dislikearticle(id)
   {
     return this.http
-      .put('/api/blog/dislike/'+id,this.createAuthenticationToken)
+      .put('/api/blog/dislike/'+id,this.createAuthenticationToken())
+      .pipe(map(res=>res.json()));
+  }
+  deletearticle(id)
+  {
+    return this.http
+      .delete('/api/blog/delete/'+id,this.createAuthenticationToken())
       .pipe(map(res=>res.json()));
   }
 }

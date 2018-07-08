@@ -19,6 +19,7 @@ export class NewPostComponent implements OnInit {
   categories;
   selectedThumbnail:File;
   form;
+  postData:FormData=new FormData();
   
 
   constructor(
@@ -61,28 +62,35 @@ export class NewPostComponent implements OnInit {
   UploadThumbnail(event)
   {
     this.selectedThumbnail = event.target.files[0];
-    const uploadData = new FormData();
     const random = Math.round((new Date()).getTime() / 1000);
-    uploadData.append('thumbnail',this.selectedThumbnail,random+this.selectedThumbnail.name);
-    console.log(random+this.selectedThumbnail.name);
+    this.postData.append('thumbnail',this.selectedThumbnail, this.selectedThumbnail.name);
+    console.log(this.selectedThumbnail);
   }
-  titlechange() {}
+  
   onBlogSubmit() {
     this.loading = true;
     this.submitbtntxt = "Submitting";
     this.disableBlogForm();
-    const blog = {
-      title: this.form.controls.title.value,
-      description: this.form.controls.description.value,
-      body: this.form.controls.body.value,
-      url: this.form.controls.url.value,
-      category: this.form.controls.category.value,
-      status: this.form.controls.status.value,
-      tags: this.form.controls.tags.value,
-      createdBy: this.authService.getUserId(),
-      thumbnail: "https://storage.googleapis.com/hackers-choice-206505.appspot.com/DOS-attack-10292013-1024x0-c-default.jpg"
-    };
-    this.blogService.submitArticle(blog).subscribe(data=>{
+    // const blog = {
+    //   title: this.form.controls.title.value,
+    //   description: this.form.controls.description.value,
+    //   body: this.form.controls.body.value,
+    //   url: this.form.controls.url.value,
+    //   category: this.form.controls.category.value,
+    //   status: this.form.controls.status.value,
+    //   tags: this.form.controls.tags.value,
+    //   createdBy: this.authService.getUserId()
+    // };
+    this.postData.append('title',this.form.controls.title.value);
+    this.postData.append('description',this.form.controls.description.value);
+    this.postData.append('body',this.form.controls.body.value);
+    this.postData.append('url',this.form.controls.url.value);
+    this.postData.append('category',this.form.controls.category.value);
+    this.postData.append('status',this.form.controls.status.value);
+    this.postData.append('tags',this.form.controls.tags.value);
+    this.postData.append('createdBy',this.authService.getUserId());
+    // console.log(this.postData);
+   this.blogService.submitArticle(this.postData).subscribe(data=>{
       this.loading = false;
       if(data.success)
       {
